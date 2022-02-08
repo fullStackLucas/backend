@@ -1,0 +1,17 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "author": "Lucas Pinheiro Rocha",
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^27.5.1",
+    "readline-sync": "^1.4.10"
+  }
+}
