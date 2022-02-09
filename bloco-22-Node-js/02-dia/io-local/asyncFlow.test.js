@@ -1,7 +1,7 @@
 const calculateNumbers = require('./asyncFlow');
 
-describe('testing possibles returns from Promises of CalculateNumbers function', () => {
-  it('should return the reponse of the Promise', async () => {
+describe('testing possible returns from Promises of CalculateNumbers function', () => {
+  it('should return the response of the Promise', async () => {
     const result = await calculateNumbers(7, 8, 5);
     expect(result).toBe(75);
   })
