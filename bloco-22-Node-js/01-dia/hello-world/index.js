@@ -6,6 +6,6 @@ const age = readline.questionInt('Qual sua idade? ');
 const weight = readline.questionInt('Qual seu peso? ');
 const height = readline.questionFloat('Qual sua altura? ');
 
-console.log(`Hello ${name}! You are ${age} years old! and based on your weight: ${weight} and height: ${height}, your IMC is: ${calcImc(weight, height)}`);
+console.log(`Hello ${name}! You are ${age} years old! and based on your weight: ${weight} and height: ${height}, your IMC is: ${calcImc(weight, height)}. This means that you are on the classifier: ${imcClassifier(calcImc(weight, height))}`);
 
 
