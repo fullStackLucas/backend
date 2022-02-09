@@ -1,0 +1,13 @@
+{
+  "name": "io-local",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node readFileSync.js"
+  },
+  "keywords": [],
+  "author": "Lucas Pinheiro",
+  "license": "ISC"
+}
