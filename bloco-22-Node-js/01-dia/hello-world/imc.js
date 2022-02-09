@@ -16,7 +16,8 @@ const imcClassifier = (imcResult) => {
   if (!imcResult) {
     throw new Error('Parameters must be provided');
   }
-  let response;
+  try {
+    let response;
   if(Number(imcResult) <= 18.5) response = 'Abaixo do peso (magreza)';
   if(Number(imcResult) > 18.5 && Number(imcResult) <= 24.9) response = 'Peso normal';
   if(Number(imcResult) > 25 && Number(imcResult) <= 29.9) response = 'Acima do peso (sobrepeso)';
@@ -24,6 +25,9 @@ const imcClassifier = (imcResult) => {
   if(Number(imcResult) > 35 && Number(imcResult) <= 39.9) response = 'Obesidade grau II';
   if(Number(imcResult) > 40) response = 'Obesidade graus III e IV';
   return response;
+  } catch (e) {
+    console.log(e.message);
+  }
 }
 
 module.exports = { calcImc, imcClassifier };
