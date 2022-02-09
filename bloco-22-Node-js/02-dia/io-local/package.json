@@ -9,5 +9,8 @@
   },
   "keywords": [],
   "author": "Lucas Pinheiro",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "jest": "^27.5.1"
+  }
 }
