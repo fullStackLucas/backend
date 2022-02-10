@@ -1,7 +1,6 @@
 const fs = require('fs');
 const sinon = require('sinon');
 const { expect } = require('chai');
-
 const leArquivo = require('../leArquivo');
 
 const CONTEUDO_DO_ARQUIVO = 'VQV com TDD';
