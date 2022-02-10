@@ -18,9 +18,8 @@ describe.only('Function that should write something into a file', () => {
     expect(writeFile).to.be.a('function');
   })
 
-  it('should throw an error if argumnets are not strings', () => {
-    const result = writeFile();
-    expect(() => result).to.throw('Arguments must be strings');
+  it('should throw an error if arguments are not strings', () => {
+    expect(() => writeFile()).to.throw('Arguments must be strings');
   })
 
   it('should return an "ok" message if everything is fine', () => {
