@@ -29,15 +29,22 @@ function compare(a, b) {
 
 app.use(cors());
 
+app.get('/validateToken', function (req, res) {
+  const token = req.headers.authorization;
+  if (token.length !== 16) return res.status(401).json({message: 'Invalid Token!'});
+
+  return res.status(200).json({message: 'Valid Token!'});
+});
+
 app.get('/recipes', (_req, res) => {
   const orderedRecipes = recipes.sort(compare); 
-  res.json(orderedRecipes);
+  return res.json(orderedRecipes);
 });
 
 app.post('/recipes', (req, res) => {
-  const { id, name, price } = req.body;
-  recipes.push({ id, name, price});
-  res.status(201).json({ message: 'Recipe created successfully!'});
+  const { id, name, price, waitTime } = req.body;
+  recipes.push({ id, name, price, waitTime});
+  return res.status(201).json({ message: 'Recipe created successfully!'});
 });
 
 app.get('/recipes/search', (req, res) => {
@@ -47,7 +54,7 @@ app.get('/recipes/search', (req, res) => {
   });
 
   if(!filteredRecipes.length) return res.status(404).json({ message: 'There are no recipes matching'});
-  res.status(200).json(filteredRecipes);
+  return res.status(200).json(filteredRecipes);
 });
 
 app.get('/recipes/:id', (req, res) => {
@@ -56,20 +63,26 @@ app.get('/recipes/:id', (req, res) => {
 
   if (!recipe) return res.status(404).json({ message: 'Recipe not found!'});
 
-  res.status(200).json(recipe);
+  return res.status(200).json(recipe);
 });
 
 app.get('/drinks', (_req, res) => {
   const orderedDrinks = drinks.sort(compare);
-  res.json(orderedDrinks);
+  return res.json(orderedDrinks);
 });
+
+app.post('/drinks', (req, res) => {
+  const { id, name, price } = req.body;
+  drinks.push({ id, name, price });
+  return res.status(201).json({ message: 'Drink created successfully!'});
+})
 
 app.get('/drinks/search', (req, res) => {
   const { name } = req.query;
   const filteredDrink = drinks.filter((drink) => drink.name.toLowerCase().includes(name.toLowerCase()));
 
   if (!filteredDrink.length) return res.status(404).json({ message: 'There are no drinks matching'});
-  res.status(200).json(filteredDrink);
+  return res.status(200).json(filteredDrink);
 });
 
 app.get('/drinks/:id', (req, res) => {
@@ -78,7 +91,7 @@ app.get('/drinks/:id', (req, res) => {
 
   if (!drink) return res.status(404).json({ message: 'Drink not found' });
 
-  res.status(200).json(drink);
+  return res.status(200).json(drink);
 });
 
 app.listen(3001, () => {
