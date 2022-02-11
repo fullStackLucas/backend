@@ -56,6 +56,14 @@ app.get('/drinks', (_req, res) => {
   res.json(orderedDrinks);
 });
 
+app.get('/drinks/search', (req, res) => {
+  const { name } = req.query;
+  const filteredDrink = drinks.filter((drink) => drink.name.toLowerCase().includes(name.toLowerCase()));
+
+  if (!filteredDrink.length) return res.status(404).json({ message: 'There are no drinks matching'});
+  res.status(200).json(filteredDrink);
+});
+
 app.get('/drinks/:id', (req, res) => {
   const { id } = req.params;
   const drink = drinks.find((drink) => drink.id === Number(id));
