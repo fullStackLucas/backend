@@ -23,6 +23,8 @@ function compare(a, b) {
   return 0;
 }
 
+
+
 app.use(cors());
 
 app.get('/recipes', (_req, res) => {
@@ -42,6 +44,15 @@ app.get('/recipes/:id', (req, res) => {
 app.get('/drinks', (_req, res) => {
   const orderedDrinks = drinks.sort(compare);
   res.json(orderedDrinks);
+});
+
+app.get('/drinks/:id', (req, res) => {
+  const { id } = req.params;
+  const drink = drinks.find((drink) => drink.id === Number(id));
+
+  if (!drink) return res.status(404).json({ message: 'Drink not found' });
+
+  res.status(200).json(drink);
 });
 
 app.listen(3001, () => {
