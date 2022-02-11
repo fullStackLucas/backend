@@ -32,6 +32,16 @@ app.get('/recipes', (_req, res) => {
   res.json(orderedRecipes);
 });
 
+app.get('/recipes/search', (req, res) => {
+  const { name, maxPrice, minPrice } = req.query;
+  const filteredRecipes = recipes.filter((r) => {
+    return r.name.includes(name) && (r.price <= Number(maxPrice) && r.price >= Number(minPrice));
+  });
+
+  if(!filteredRecipes.length) return res.status(404).json({ message: 'There are no recipes matching'});
+  res.status(200).json(filteredRecipes);
+});
+
 app.get('/recipes/:id', (req, res) => {
   const { id } = req.params;
   const recipe = recipes.find((r) => r.id === Number(id));
