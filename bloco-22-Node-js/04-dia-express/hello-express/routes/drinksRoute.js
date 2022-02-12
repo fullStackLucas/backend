@@ -3,8 +3,8 @@ const { drinks } = require('../data');
 const ascendingSort = require('../data/helpers');
 
 const drinksRoute = Router();
-const drinksSearchRoute = Router();
-const drinksByIdRoute = Router();
+const drinksSearch = Router();
+const drinksById = Router();
 
 drinksRoute.get('/', (_req, res) => {
   const ordereDrinks = drinks.sort(ascendingSort); 
@@ -17,7 +17,7 @@ drinksRoute.post('/', (req, res) => {
   return res.status(201).json({ message: 'Drink created successfully!'});
 });
 
-drinksSearchRoute.get('/', (req, res) => {
+drinksSearch.get('/', (req, res) => {
   const { name, maxPrice } = req.query;
   const filteredDrinks = drinks.filter(drink => drink.name.includes(name)
     && drink.price <= Number(maxPrice));
@@ -27,7 +27,7 @@ drinksSearchRoute.get('/', (req, res) => {
   return res.status(200).json(filteredDrinks);
 });
 
-drinksByIdRoute.get('/', (req, res) => {
+drinksById.get('/', (req, res) => {
   const { id } = req.params;
   const findDrink = drinks.find((drink) => drink.id === Number(id));
 
@@ -36,7 +36,7 @@ drinksByIdRoute.get('/', (req, res) => {
   return res.status(200).json(findDrink);
 })
 
-drinksByIdRoute.put('/', (req, res) => {
+drinksById.put('/', (req, res) => {
   const { id } = req.params;
   const { name, price } = req.body;
 
@@ -49,9 +49,8 @@ drinksByIdRoute.put('/', (req, res) => {
   return res.status(204).end();
 });
 
-drinksByIdRoute.delete('/', () => {
+drinksById.delete('/', () => {
   const { id } = req.params;
-  const { name, price } = req.body;
 
   const indexOfDrink = drinks.findIndex((dr) => dr.id === Number(id));
 
@@ -62,5 +61,4 @@ drinksByIdRoute.delete('/', () => {
   return res.status(204).end();
 })
 
-
-module.exports = { drinksRoute, drinksSearchRoute, drinksByIdRoute };
+module.exports = { drinksRoute, drinksSearch, drinksById };
