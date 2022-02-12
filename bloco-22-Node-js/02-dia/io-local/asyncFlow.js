@@ -14,8 +14,4 @@ const calculateNumbers = async (num1, num2, num3) => {
   return promise;
 };
 
-calculateNumbers(2, 4, 5)
-  .then((response) => console.log(response))
-  .catch((error) => console.log(error));
-
 module.exports = calculateNumbers;
