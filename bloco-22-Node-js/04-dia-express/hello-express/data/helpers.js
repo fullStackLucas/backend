@@ -1,7 +1,7 @@
-function compare(a, b) {
+function ascendingSort(a, b) {
   if (a.name < b.name) return -1;
   if (a.name > b.name) return 1;
   return 0;
 }
 
-module.exports = compare;
+module.exports = ascendingSort;

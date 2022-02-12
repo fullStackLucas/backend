@@ -1,8 +1,13 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const recipesRoute = require('./routes/recipesRoute');
-const { drinksRoute,
+const {
+  recipesRoute,
+  recipesSearch,
+  recipesById,
+} = require('./routes/recipesRoute');
+const { 
+  drinksRoute,
   drinksSearchRoute,
   drinksByIdRoute,
 } = require('./routes/drinksRoute');
@@ -26,15 +31,7 @@ app.get('/validateToken', (req, res) => {
 
 app.use('/recipes', recipesRoute);
 
-app.get('/recipes/search', (req, res) => {
-  const { name, maxPrice, minPrice } = req.query;
-  const filteredRecipes = recipes.filter((r) => {
-    return r.name.includes(name) && (r.price <= Number(maxPrice) && r.price >= Number(minPrice));
-  });
-
-  if(!filteredRecipes.length) return res.status(404).json({ message: 'There are no recipes matching'});
-  return res.status(200).json(filteredRecipes);
-});
+app.use('/recipes/search', recipesSearch);
 
 app.put('/recipes/:id', (req, res) => {
   const { id } = req.params;

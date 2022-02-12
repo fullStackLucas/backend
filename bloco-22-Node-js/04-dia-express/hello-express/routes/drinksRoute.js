@@ -1,13 +1,13 @@
 const { Router } = require('express');
 const { drinks } = require('../data');
-
+const ascendingSort = require('../data/helpers');
 
 const drinksRoute = Router();
 const drinksSearchRoute = Router();
 const drinksByIdRoute = Router();
 
 drinksRoute.get('/', (_req, res) => {
-  const ordereDrinks = drinks.sort(compare); 
+  const ordereDrinks = drinks.sort(ascendingSort); 
   return res.json(ordereDrinks);
 });
 
