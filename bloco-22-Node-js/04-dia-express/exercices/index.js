@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 const pingRoute = require('./routes/Ping');
 const helloRoute = require('./routes/Hello');
+const greetingsRoute = require('./routes/Greetings');
 
 const app = express();
 
@@ -14,6 +15,8 @@ app.get('/', (_req, res, _next) =>{
 
 app.use('/ping', pingRoute);
 
-app.use('/hello', helloRoute); 
+app.use('/hello', helloRoute);
+
+app.use('/greetings', greetingsRoute);
 
 app.listen('3001', () => console.log('listening on http://localhost:3001'));
