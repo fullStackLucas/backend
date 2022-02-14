@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { drinks } = require('../data');
-const ascendingSort = require('../data/helpers');
+const { ascendingSort, validateName } = require('../data/helpers');
 
 const drinksRoute = Router();
 const drinksSearch = Router();
@@ -11,13 +11,13 @@ drinksRoute.get('/', (_req, res) => {
   return res.json(ordereDrinks);
 });
 
-drinksRoute.post('/', (req, res) => {
+drinksRoute.post('/', validateName, (req, res) => {
   const { id, name, price, waitTime } = req.body;
   drinks.push({ id, name, price, waitTime});
   return res.status(201).json({ message: 'Drink created successfully!'});
 });
 
-drinksSearch.get('/', (req, res) => {
+drinksSearch.get('/', validateName, (req, res) => {
   const { name, maxPrice } = req.query;
   const filteredDrinks = drinks.filter(drink => drink.name.includes(name)
     && drink.price <= Number(maxPrice));
@@ -36,7 +36,7 @@ drinksById.get('/', (req, res) => {
   return res.status(200).json(findDrink);
 })
 
-drinksById.put('/', (req, res) => {
+drinksById.put('/', validateName, (req, res) => {
   const { id } = req.params;
   const { name, price } = req.body;
 

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const { recipes } = require('../data');
-const ascendingSort = require('../data/helpers');
+const { ascendingSort, validateName } = require('../data/helpers');
 
 const recipesRoute = Router();
 const recipesSearch = Router();
@@ -11,13 +11,13 @@ recipesRoute.get('/', (_req, res) => {
   return res.json(orderedRecipes);
 });
 
-recipesRoute.post('/', (req, res) => {
+recipesRoute.post('/', validateName, (req, res) => {
   const { id, name, price, waitTime } = req.body;
   recipes.push({ id, name, price, waitTime});
   return res.status(201).json({ message: 'Recipe created successfully!'});
 });
 
-recipesSearch.get('/', (req, res) => {
+recipesSearch.get('/', validateName, (req, res) => {
   const { name, maxPrice, minPrice } = req.query;
   const filteredRecipes = recipes.filter((r) => {
     return r.name.includes(name) && (r.price <= Number(maxPrice) && r.price >= Number(minPrice));
@@ -36,7 +36,7 @@ recipesById.get('/recipes/:id', (req, res) => {
   return res.status(200).json(recipe);
 });
 
-recipesById.put('/', (req, res) => {
+recipesById.put('/', validateName, (req, res) => {
   const { id } = req.params;
   const { name, price } = req.body;
   const recipeIndex = recipes.findIndex((recipe) => recipe.id === Number(id));
