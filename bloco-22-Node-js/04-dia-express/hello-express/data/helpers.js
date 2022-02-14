@@ -14,8 +14,6 @@ function validateName(req, res, next) {
 function validatePrice(req, res, next) {
   const { price } = req.body;
 
-  console.log(typeof(price));
-
   if (!price || Number(price) < 0) return res.status(400).json({error: 'Invalid data'});
 
   next();
