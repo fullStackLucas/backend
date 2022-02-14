@@ -1,16 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const {
-  recipesRoute,
-  recipesSearch,
-  recipesById,
-} = require('./routes/recipesRoute');
-const { 
-  drinksRoute,
-  drinksSearch,
-  drinksById,
-} = require('./routes/drinksRoute');
+const recipesRoute = require('./routes/recipesRoute');
+const drinksRoute = require('./routes/drinksRoute');
 
 const app = express();
 
@@ -31,15 +23,7 @@ app.get('/validateToken', (req, res) => {
 
 app.use('/recipes', recipesRoute);
 
-app.use('/recipes/search', recipesSearch);
-
-app.use('/recipes/:id', recipesById);
-
 app.use('/drinks', drinksRoute);
-
-app.use('/drinks/search', drinksSearch);
-
-app.use('/drinks/:id', drinksById);
 
 app.listen(3001, () => {
   console.log('Aplicação ouvindo na porta 3001');

@@ -1,10 +1,8 @@
 const { Router } = require('express');
-const { recipes } = require('../data');
-const { ascendingSort, validateName } = require('../data/helpers');
+const { recipes } = require('../data/index');
+const { ascendingSort, validateName, validatePrice } = require('../data/helpers');
 
 const recipesRoute = Router();
-const recipesSearch = Router();
-const recipesById = Router();
 
 recipesRoute.get('/', (_req, res) => {
   const orderedRecipes = recipes.sort(ascendingSort); 
@@ -17,7 +15,7 @@ recipesRoute.post('/', validateName, (req, res) => {
   return res.status(201).json({ message: 'Recipe created successfully!'});
 });
 
-recipesSearch.get('/', validateName, (req, res) => {
+recipesRoute.get('/search', validateName, (req, res) => {
   const { name, maxPrice, minPrice } = req.query;
   const filteredRecipes = recipes.filter((r) => {
     return r.name.includes(name) && (r.price <= Number(maxPrice) && r.price >= Number(minPrice));
@@ -27,8 +25,9 @@ recipesSearch.get('/', validateName, (req, res) => {
   return res.status(200).json(filteredRecipes);
 });
 
-recipesById.get('/recipes/:id', (req, res) => {
+recipesRoute.get('/:id', (req, res) => {
   const { id } = req.params;
+  console.log(id);
   const recipe = recipes.find((r) => r.id === Number(id));
 
   if (!recipe) return res.status(404).json({ message: 'Recipe not found!'});
@@ -36,7 +35,7 @@ recipesById.get('/recipes/:id', (req, res) => {
   return res.status(200).json(recipe);
 });
 
-recipesById.put('/', validateName, (req, res) => {
+recipesRoute.put('/:id', validateName, validatePrice, (req, res) => {
   const { id } = req.params;
   const { name, price } = req.body;
   const recipeIndex = recipes.findIndex((recipe) => recipe.id === Number(id));
@@ -48,7 +47,7 @@ recipesById.put('/', validateName, (req, res) => {
   return res.status(204).end();
 });
 
-recipesById.delete('/recipes/:id', (req, res) => {
+recipesRoute.delete('/:id', (req, res) => {
   const { id } = req.params;
   const recipeIndex = recipes.findIndex((r) => r.id === parseInt(id));
 
@@ -59,4 +58,4 @@ recipesById.delete('/recipes/:id', (req, res) => {
   return res.status(204).end();
 });
 
-module.exports = { recipesRoute, recipesById, recipesSearch };
+module.exports = recipesRoute;
